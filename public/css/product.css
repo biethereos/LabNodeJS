@@ -50,7 +50,7 @@ main {
   margin: auto;
 }
 
-.form-control {
+/* .form-control {
   margin: 1rem 0;
 }
 
@@ -64,7 +64,7 @@ main {
   border: 1px solid #dbc441;
   font: inherit;
   border-radius: 2px;
-}
+} */
 
 button {
   font: inherit;

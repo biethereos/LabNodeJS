@@ -1,25 +1,26 @@
-const path = require('path');
+const path = require("path");
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
-const errorController = require('./controllers/error');
-const User = require('./models/user');
+const errorController = require("./controllers/error");
+const User = require("./models/user");
 
 const app = express();
 
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set("view engine", "ejs");
+app.set("views", "views");
 
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+const authRoutes = require("./routes/auth");
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  User.findById('63dca334f948e1206280f6d6')
+  User.findById("63dca334f948e1206280f6d6")
     .then((user) => {
       req.user = user;
       next();
@@ -29,21 +30,21 @@ app.use((req, res, next) => {
     });
 });
 
-app.use('/admin', adminRoutes);
+app.use("/admin", adminRoutes);
 app.use(shopRoutes);
-
+app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
   .connect(
-    'mongodb+srv://testmg:P9IgB3Ne0CJ8L9OG@funixnodelab.9vajvc9.mongodb.net/shop?retryWrites=true&w=majority'
+    "mongodb+srv://testmg:P9IgB3Ne0CJ8L9OG@funixnodelab.9vajvc9.mongodb.net/shop?retryWrites=true&w=majority",
   )
   .then((result) => {
     User.findOne().then((user) => {
       if (!user) {
         const user = new User({
-          name: 'Hung',
-          email: 'nguyenthanhhung@gmail.com',
+          name: "Hung",
+          email: "nguyenthanhhung@gmail.com",
           cart: {
             items: [],
           },

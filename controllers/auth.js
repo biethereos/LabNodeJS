@@ -6,9 +6,9 @@
  * @param {Function} next - The next middleware function.
  */
 exports.getLogin = (req, res, next) => {
-  const isLoggedIn =
-    req.get("Cookie").split(";")[3].trim().split("=")[1] ===
-    "true";
+  // const isLoggedIn =
+  //   req.get("Cookie").split(";")[3].trim().split("=")[1] ===
+  //   "true";
   res.render("auth/login", {
     pageTitle: "Login",
     path: "/login",
@@ -17,6 +17,6 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  res.setHeader("Set-Cookie", "loggedIn=true");
+  res.setHeader("Set-Cookie", "loggedIn=true; HttpOnly");
   res.redirect("/");
 };
